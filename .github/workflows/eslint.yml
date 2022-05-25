@@ -3,14 +3,15 @@ on:
   push:
     branches:
       - 'stable'
-env: 
+env:
   ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
   
 jobs:
-  eslint:
+  lint-and-comment:
     name: runner / eslint
     runs-on: ubuntu-latest
     steps:
+    
       - name: Checkout this repository
         uses: actions/checkout@v3
       
@@ -27,6 +28,5 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       
       - name: Run eslint and reviewdog
-        run: |
-          docker run --rm -v $ESLINTRC:/home/node/scan/eslintrc.json -v $PWD:/home/node/src c4rp1nch0/security-tools-eslint sh -c 'eslint --no-eslintrc -c /home/node/scan/eslintrc.json --ext .ts,.tsx,.js,.jsx,.json --no-color --format rdjson --no-error-on-unmatched-pattern --no-inline-config /home/node/src | reviewdog -f=rdjson -reporter=github-pr-review -fail-on-error'
+        run: docker run --rm -v $ESLINTRC:/home/node/scan/eslintrc.json -v $PWD:/home/node/src c4rp1nch0/security-tools-eslint sh -c 'eslint --no-eslintrc -c /home/node/scan/eslintrc.json --ext .ts,.tsx,.js,.jsx,.json --no-color --format rdjson --no-error-on-unmatched-pattern --no-inline-config /home/node/src | reviewdog -f=rdjson -reporter=github-pr-review -fail-on-error'
 
