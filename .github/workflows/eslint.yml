@@ -27,5 +27,6 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       
       - name: Run eslint and reviewdog
+        run: |
           docker run --rm -v $ESLINTRC:/home/node/scan/eslintrc.json -v $PWD:/home/node/src c4rp1nch0/security-tools-eslint sh -c 'eslint --no-eslintrc -c /home/node/scan/eslintrc.json --ext .ts,.tsx,.js,.jsx,.json --no-color --format rdjson --no-error-on-unmatched-pattern --no-inline-config /home/node/src | reviewdog -f=rdjson -reporter=github-pr-review -fail-on-error'
 
