@@ -7,13 +7,8 @@ env:
   ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
   
 jobs:
-<<<<<<< HEAD
   lint-and-comment-pr:
     name: run eslint and comment the pr
-=======
-  lint-and-comment:
-    name: runner / eslint
->>>>>>> 7a84177272b394df60737b221071f90cc5c6cd7e
     runs-on: ubuntu-latest
     steps:
     
