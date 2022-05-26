@@ -1,0 +1,11 @@
+on: [push]
+
+jobs:
+  test-private-action:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: c4rp1nch0/security-actions/eslint@master
+      # Use the output from the `hello` step
