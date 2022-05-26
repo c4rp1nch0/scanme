@@ -7,15 +7,15 @@ env:
   ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
   
 jobs:
-  eslint:
-    name: runner / eslint
+  lint-and-comment-pr:
+    name: run eslint and comment the pr
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v3
       
       - name: Download eslint config
-      - run: |
+        run: |
           ESLINTRC="$(mktmp)/eslintrc.json"
           curl -LfsS ${{ env.ESLINT_CONFIG_URL }} -H "Authorization: token ${{ secret.GH_SECURITY_TOKEN }}" -o $ESLINTRC
           echo "::set-env name=ESLINTRC::$ESLINTRC"
