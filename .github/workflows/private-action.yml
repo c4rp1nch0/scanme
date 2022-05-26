@@ -5,7 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-      - name: Hello world action step
-        id: hello
-        uses: c4rp1nch0/security-actions/eslint-reviewdog@master
+      - name: Checkout private action
+        uses: actions/checkout@v3
+        with:
+          repository: c4rp1nch0/security-actions
+          token: ${{ secrets.GH_SECURITY_TOKEN }}
+          path: .github/security-actions
+      - name: Run private action 
+        uses: .github/security-actions/eslint-reviewdog
       # Use the output from the `hello` step
