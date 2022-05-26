@@ -17,7 +17,7 @@ jobs:
       
       - name: Download eslint config
         run: |
-          ESLINTRC="$(mktmp)/eslintrc.json"
+          ESLINTRC="$(mktemp -d)/eslintrc.json"
           curl -LfsS ${{ env.ESLINT_CONFIG_URL }} -H "Authorization: token ${{ secret.GH_SECURITY_TOKEN }}" -o $ESLINTRC
           echo "::set-env name=ESLINTRC::$ESLINTRC"
 
