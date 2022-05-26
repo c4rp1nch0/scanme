@@ -12,5 +12,5 @@ jobs:
           token: ${{ secrets.GH_SECURITY_TOKEN }}
           path: .github/security-actions
       - name: Run private action 
-        uses: .github/security-actions/eslint-reviewdog
+        uses: ./.github/security-actions/eslint-reviewdog
       # Use the output from the `hello` step
