@@ -27,5 +27,5 @@ jobs:
         uses: ./.github/security-actions/eslint-reviewdog
         with:
           eslint-config: "${{ github.workspace }}/.eslintrc"
-          eslint-flags: '--no-color ---no-error-on-unmatched-pattern --no-inline-config' 
+          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ github.workspace }}
