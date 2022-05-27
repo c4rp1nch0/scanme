@@ -26,6 +26,6 @@ jobs:
       - name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
         with:
-          eslint-config: "${GITHUB_WORKSPACE}/.eslintrc"
+          eslint-config: "${{ github.workspace }}/.eslintrc"
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: "${GITHUB_WORKSPACE}"
+          eslint-paths: ${{ github.workspace }}
