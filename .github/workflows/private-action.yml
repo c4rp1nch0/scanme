@@ -29,3 +29,4 @@ jobs:
           eslint-config: "${{ github.workspace }}/.eslintrc"
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ github.workspace }}
+          reviewdog-reporter: 'github-check'
