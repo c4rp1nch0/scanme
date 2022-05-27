@@ -25,4 +25,6 @@ jobs:
           
       - name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
-      # Use the output from the `hello` step
+        with:
+          eslint-eslintrc: '.eslintrc'
+          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
