@@ -34,13 +34,14 @@ jobs:
           #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           #
           #          
-      - name: Run private action 
+      - id: eslint-runner
+        name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
-        id: eslint-runner
         with:
           eslint-config: "${{ github.workspace }}/.eslintrc"
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ github.workspace }}
 
       - name: Check eslint output      
-        run: cat ${{ jobs.eslint-runner.outputs.eslint-output-file }}
+        run: |
+          cat ${{ steps.eslint-runner.outputs.eslint-output-file }}
