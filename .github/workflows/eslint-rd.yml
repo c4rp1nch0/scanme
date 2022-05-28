@@ -9,7 +9,7 @@ jobs:
   test-private-action:
     runs-on: ubuntu-latest
     container:
-      image: registry.hub.docker.com/c4rp1nch0/security-tools-eslint:latest
+      image: registry.hub.docker.com/c4rp1nch0/security-tools-eslint
       credentials:
         username: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         password: ${{ secrets.DOCKER_HUB_USERNAME }}
