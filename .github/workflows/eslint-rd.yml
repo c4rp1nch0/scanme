@@ -9,10 +9,10 @@ jobs:
   test-private-action:
     runs-on: ubuntu-latest
     container:
-      image: registry-1.docker.io/c4rp1nch0/security-tools-eslint
+      image: c4rp1nch0/security-tools-eslint
       credentials:
-        username: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        password: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
     name: A job to say hello
     steps:
 
