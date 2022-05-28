@@ -7,6 +7,7 @@ on:
 
 jobs:
   test-private-action:
+    runs-on: ubuntu-latest
     container:
       image: c4rp1nch0/security-tools-eslint:latest
       credentials:
