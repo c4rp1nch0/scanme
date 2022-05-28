@@ -14,18 +14,18 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
       options: --user root 
-    name: A job to say hello
+    name:  
     steps:
 
       - name: Checkout this repo 
         uses: actions/checkout@v3
           
-          #      - name: Checkout private action
-          #        uses: actions/checkout@v3
-          #        with:
-          #          repository: c4rp1nch0/security-actions
-          #          token: ${{ secrets.GH_SECURITY_TOKEN }}
-          #          path: .github/security-actions
+      - name: Checkout private action
+        uses: actions/checkout@v3
+        with:
+          repository: c4rp1nch0/security-actions
+          token: ${{ secrets.GH_SECURITY_TOKEN }}
+          path: .github/security-actions
           #            
           #      - name: Login to Docker Hub
           #        uses: docker/login-action@v1
@@ -34,9 +34,13 @@ jobs:
           #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           #
           #          
-          #      - name: Run private action 
-          #        uses: ./.github/security-actions/eslint-reviewdog
-          #        with:
-          #          eslint-config: "${{ github.workspace }}/.eslintrc"
-          #          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          #          eslint-paths: ${{ github.workspace }}
+      - name: Run private action 
+        uses: ./.github/security-actions/eslint-reviewdog
+        id: eslint-runner
+        with:
+          eslint-config: "${{ github.workspace }}/.eslintrc"
+          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
+          eslint-paths: ${{ github.workspace }}
+
+      - name: Check eslint output      
+        run: cat ${{ jobs.eslint-runner.outputs.eslint-output-file }}
