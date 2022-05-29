@@ -35,7 +35,7 @@ jobs:
           #
           #          
       - name: List files
-        run: find .
+        run: find ~+
 
       - id: eslint-runner
         name: Run private action 
