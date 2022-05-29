@@ -36,8 +36,9 @@ jobs:
           #          
       - name: List files
         run: |
+          bash -c "env"
           bash -c "find ~+"
-          bash -c "find /home"
+          bash -c "find /"
 
       - id: eslint-runner
         name: Run private action 
