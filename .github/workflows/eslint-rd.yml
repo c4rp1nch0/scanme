@@ -36,7 +36,7 @@ jobs:
           #          
       - id: eslint-runner
         name: Run private action 
-        uses: .github/security-actions/eslint
+        uses: ./.github/security-actions/eslint
         with:
           eslint-config: "${{ github.workspace }}/.eslintrc"
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
