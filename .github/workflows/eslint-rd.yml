@@ -34,6 +34,9 @@ jobs:
           #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           #
           #          
+      - name: List files
+        run: find .
+
       - id: eslint-runner
         name: Run private action 
         uses: ./.github/security-actions/eslint
