@@ -35,7 +35,7 @@ jobs:
       - name: Download eslint config
         id: eslintrc
         run: |
-          ESLINTRC="${{ github.workspace }}/$(mktemp).json"
+          ESLINTRC=${{ github.workspace }}/$(mktemp).json
           curl -LfsS ${{ env.ESLINT_CONFIG_URL }} -H "Authorization: token ${{ secrets.GH_SECURITY_TOKEN }}" -o $ESLINTRC
           echo "::set-output name=eslintrc-path::${ESLINTRC}" 
           
