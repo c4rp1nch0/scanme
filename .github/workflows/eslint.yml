@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - 'stable'
+  pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+
+
 env:
   ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
   
