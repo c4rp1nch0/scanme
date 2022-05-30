@@ -29,7 +29,6 @@ jobs:
           echo "::set-output name=eslintrc-path::${ESLINTRC}" 
       - name: Echo ESLINTRC
         run: |
-          find /home/node/scan
           echo ${{ steps.eslintrc.outputs.eslintrc-path }} 
           cat ${{ steps.eslintrc.outputs.eslintrc-path }} 
           
