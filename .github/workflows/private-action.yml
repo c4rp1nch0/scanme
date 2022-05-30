@@ -3,6 +3,10 @@ on:
     branches:
       - 'stable' 
   pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+
 
 jobs:
   test-private-action:
