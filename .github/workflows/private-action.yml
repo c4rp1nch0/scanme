@@ -3,6 +3,12 @@ on:
     branches:
       - 'stable' 
   pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+
+env:
+  ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
 
 jobs:
   test-private-action:
@@ -26,10 +32,17 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Download eslint config
+        id: eslintrc
+        run: |
+          ESLINTRC=$(mktemp -p ${{ github.workspace }}).json
+          curl -LfsS ${{ env.ESLINT_CONFIG_URL }} -H "Authorization: token ${{ secrets.GH_SECURITY_TOKEN }}" -o $ESLINTRC
+          echo "::set-output name=eslintrc-path::${ESLINTRC}" 
           
       - name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
         with:
-          eslint-config: "${{ github.workspace }}/.eslintrc"
+          eslint-config: ${{ steps.eslintrc.outputs.eslintrc-path }}
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ github.workspace }}
+          reviewdog-filter-mode: added
