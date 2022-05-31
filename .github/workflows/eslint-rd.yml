@@ -7,25 +7,23 @@ on:
 
 jobs:
   test-private-action:
-    runs-on: ubuntu-latest
     container:
-      image: c4rp1nch0/security-tools-eslint
+      image: c4rp1nch0/security-tools-eslint:latest
       credentials:
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      options: --user root 
-    name:  
+        username: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        password: ${{ secrets.DOCKER_HUB_USERNAME }}
+    name: A job to say hello
     steps:
 
       - name: Checkout this repo 
         uses: actions/checkout@v3
           
-      - name: Checkout private action
-        uses: actions/checkout@v3
-        with:
-          repository: c4rp1nch0/security-actions
-          token: ${{ secrets.GH_SECURITY_TOKEN }}
-          path: .github/security-actions
+          #      - name: Checkout private action
+          #        uses: actions/checkout@v3
+          #        with:
+          #          repository: c4rp1nch0/security-actions
+          #          token: ${{ secrets.GH_SECURITY_TOKEN }}
+          #          path: .github/security-actions
           #            
           #      - name: Login to Docker Hub
           #        uses: docker/login-action@v1
@@ -34,20 +32,9 @@ jobs:
           #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           #
           #          
-      - name: List files
-        run: |
-          bash -c "env"
-          bash -c "find ~+"
-          bash -c "find /"
-
-      - id: eslint-runner
-        name: Run private action 
-        uses: ./.github/security-actions/eslint
-        with:
-          eslint-config: "${{ github.workspace }}/.eslintrc"
-          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: ${{ github.workspace }}
-
-      - name: Check eslint output      
-        run: |
-          cat ${{ steps.eslint-runner.outputs.eslint-output-file }}
+          #      - name: Run private action 
+          #        uses: ./.github/security-actions/eslint-reviewdog
+          #        with:
+          #          eslint-config: "${{ github.workspace }}/.eslintrc"
+          #          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
+          #          eslint-paths: ${{ github.workspace }}
