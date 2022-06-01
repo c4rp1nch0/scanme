@@ -18,9 +18,9 @@ jobs:
 
       - name: Checkout this repo 
         uses: actions/checkout@v3
-        ref: ${{ github.ref }}
         with:
           fetch-depth: 2
+          ref: ${{ github.ref }}
           
       - name: Checkout private action
         uses: actions/checkout@v3
