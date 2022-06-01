@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 2
           ref: ${{ github.ref }}
-          set-safe-directory: ${{ github.workspace }}
+          set-safe-directory: /github/workspace 
           
       - name: Checkout private action
         uses: actions/checkout@v3
