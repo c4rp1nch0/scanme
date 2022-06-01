@@ -31,7 +31,12 @@ jobs:
           path: .github/security-actions
             
       - name: Get changed files 
-        run: git diff --name-only ${{ github.event.before }}..${{ github.event.after }} 
+        run: |
+          if [ ${{ github.event_name }} == 'push' ]; then
+              git diff --name-only ${{ github.event.before }}..${{ github.event.after }} 
+          else
+              git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }}  
+          fi
 
 
             #      - name: Login to Docker Hub
