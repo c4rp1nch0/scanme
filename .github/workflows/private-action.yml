@@ -18,6 +18,7 @@ jobs:
 
       - name: Checkout this repo 
         uses: actions/checkout@v3
+        ref: ${{ github.ref }}
         with:
           fetch-depth: 2
           
@@ -34,13 +35,6 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Download eslint config
-        id: eslintrc
-        run: |
-          ESLINTRC=$(mktemp -p ${{ github.workspace }}).json
-          curl -LfsS ${{ env.ESLINT_CONFIG_URL }} -H "Authorization: token ${{ secrets.GH_SECURITY_TOKEN }}" -o $ESLINTRC
-          echo "::set-output name=eslintrc-path::${ESLINTRC}" 
-          
       - name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
         with:
