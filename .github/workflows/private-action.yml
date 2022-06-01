@@ -42,7 +42,6 @@ jobs:
       - name: Run private action 
         uses: ./.github/security-actions/eslint-reviewdog
         with:
-          eslint-config: ${{ steps.eslintrc.outputs.eslintrc-path }}
+          eslint-config-name: 'default.json'
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: ${{ github.workspace }}
           reviewdog-filter-mode: added
