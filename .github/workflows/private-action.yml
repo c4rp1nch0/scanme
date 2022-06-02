@@ -38,7 +38,7 @@ jobs:
               git diff --name-only ${{ github.event.before }}  
 
           else
-              git diff --name-only ${{ github.event.base.ref }}
+              git diff --name-only ${{ github.base_ref }}
               
           fi
 
