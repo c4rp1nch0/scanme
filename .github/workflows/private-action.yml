@@ -39,7 +39,7 @@ jobs:
 
           else
               echo 2
-              git diff --name-only ${{ github.event.before }}..${{ github.event.after }} 
+              git diff --name-only ${{ github.base.ref }}
               
           fi
 
