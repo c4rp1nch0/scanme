@@ -30,9 +30,14 @@ jobs:
 
       - name: get base sha with jq
         run: |
+          echo "BASE SHA"
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
             jq .push_request.base.sha < $GITHUB_EVENT_PATH || \
             jq .before < $GITHUB_EVENT_PATH
+          echo "HEAD SHA" 
+          [ $GITHUB_EVENT_NAME == "pull_request" ] && \
+            jq .push_request.head.sha < $GITHUB_EVENT_PATH || \
+            jq .after < $GITHUB_EVENT_PATH
 
       - name: Get changed files
         id: changed-files
