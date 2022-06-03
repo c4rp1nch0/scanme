@@ -3,6 +3,12 @@ on:
     branches:
       - 'stable' 
   pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+
+env:
+  ESLINT_CONFIG_URL: https://raw.githubusercontent.com/c4rp1nch0/gh-security-tools/stable/configs/eslint/${{ github.event.repository.name }}.json
 
 jobs:
   test-private-action:
@@ -12,7 +18,9 @@ jobs:
 
       - name: Checkout this repo 
         uses: actions/checkout@v3
-          
+        with:
+          fetch-depth: 2
+
       - name: Checkout private action
         uses: actions/checkout@v3
         with:
@@ -20,16 +28,37 @@ jobs:
           token: ${{ secrets.GH_SECURITY_TOKEN }}
           path: .github/security-actions
             
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v22.1
 
-          
-      - name: Run private action 
-        uses: ./.github/security-actions/eslint-reviewdog
-        with:
-          eslint-config: "${{ github.workspace }}/.eslintrc"
-          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: ${{ github.workspace }}
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+            #      - name: Get changed files 
+            #        run: |
+            #          cat $GITHUB_EVENT_PATH
+            #          if [ ${{ github.event_name }} == 'push' ]; then
+            #              echo 1
+            #              git diff --name-only ${{ github.event.before }}  
+            #
+            #          else
+            #              git diff --name-only ${{ github.base_ref }} ${{ github.head_ref}}
+            #              
+            #          fi
+
+
+            #      - name: Login to Docker Hub
+            #        uses: docker/login-action@v1
+            #        with:
+            #          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            #
+            #      - name: Run private action 
+            #        uses: ./.github/security-actions/eslint-reviewdog
+            #        with:
+            #          eslint-config-name: 'default.json'
+            #          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
+            #          reviewdog-filter-mode: added
