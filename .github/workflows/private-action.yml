@@ -37,9 +37,10 @@ jobs:
           echo "HEAD SHA" 
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
             HEAD_SHA=$GITHUB_SHA || \
-            HEAD_SHA=$(jq .after < $GITHUB_EVENT_PATHD) | sed 's/"//g'
+            HEAD_SHA=$(jq .after < $GITHUB_EVENT_PATHD | sed 's/"//g')
+
           echo "BASE SHA: $BASE_SHA"
-          echo "HEAD SHA" $HEAD_SHA"
+          echo "HEAD SHA: $HEAD_SHA"
           git diff --name-only $BASE_SHA $HEAD_SHA
 
       - name: Get changed files
