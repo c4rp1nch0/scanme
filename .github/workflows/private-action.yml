@@ -32,12 +32,15 @@ jobs:
         run: |
           echo "BASE SHA"
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
-            jq .pull_request.base.sha < $GITHUB_EVENT_PATH || \
-            jq .before < $GITHUB_EVENT_PATH
+            BASE_SHA=$(jq .pull_request.base.sha < $GITHUB_EVENT_PATH) || \
+            BASE_SHA=$(jq .before < $GITHUB_EVENT_PATH)
           echo "HEAD SHA" 
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
-            echo $GITHUB_SHA || \
-            jq .after < $GITHUB_EVENT_PATH
+            HEAD_SHA=$GITHUB_SHA || \
+            HEAD_SHA=$(jq .after < $GITHUB_EVENT_PATHD)
+          echo "BASE SHA: $BASE_SHA"
+          echo "HEAD SHA" $HEAD_SHA"
+          git diff --name-only $BASE_SHA $HEAD_SHA
 
       - name: Get changed files
         id: changed-files
