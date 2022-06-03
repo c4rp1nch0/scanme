@@ -36,7 +36,7 @@ jobs:
             jq .before < $GITHUB_EVENT_PATH
           echo "HEAD SHA" 
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
-            jq .pull_request.head.sha < $GITHUB_EVENT_PATH || \
+            $GITHUB_SHA || \
             jq .after < $GITHUB_EVENT_PATH
 
       - name: Get changed files
