@@ -29,6 +29,7 @@ jobs:
         run: cat $GITHUB_EVENT_PATH
 
       - name: get base sha with jq
+        shell: bash
         run: |
           /bin/echo "::group:: Getting the SHAs"
           
