@@ -59,7 +59,7 @@ jobs:
           
           pushd "$GITHUB_WORKSPACE" || \
               (/bin/echo "::error:: Couldn't change the working directory to '$GITHUB_WORKSPACE'" && exit 1)
-          WORKSPACE_PATH="$(/usr/bin/readlink -fn "$INPUT_PATH")"
+          WORKSPACE_PATH="$(/usr/bin/readlink -fn ".")"
           popd 
           
           [ ! -d "$WORKSPACE_PATH" ] && \
