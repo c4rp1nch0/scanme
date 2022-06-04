@@ -32,12 +32,12 @@ jobs:
         run: |
           echo "BASE SHA"
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
-            BASE_SHA=$(jq .pull_request.base.sha < $GITHUB_EVENT_PATH | sed 's/"//g') || \
-            BASE_SHA=$(jq .before < $GITHUB_EVENT_PATH | sed 's/"//g')
+            BASE_SHA=$(jq -r .pull_request.base.sha < $GITHUB_EVENT_PATH  | /bin/grep -Po "[a-f0-9]{40}") || \
+            BASE_SHA=$(jq .before < $GITHUB_EVENT_PATH | /bin/grep -Po "[a-f0-9]{40}")
           echo "HEAD SHA" 
           [ $GITHUB_EVENT_NAME == "pull_request" ] && \
-            HEAD_SHA=$GITHUB_SHA || \
-            HEAD_SHA=$(jq .after < $GITHUB_EVENT_PATHD | sed 's/"//g')
+            HEAD_SHA="$(echo $GITHUB_SHA | /bin/grep -Po "[a-f0-9]{40}")"  || \
+            HEAD_SHA="$(/usr/bin/jq -r '.after' < "$GITHUB_EVENT_PATH" | /bin/grep -Po "[a-f0-9]{40}")"
 
           echo "BASE SHA: $BASE_SHA"
           echo "HEAD SHA: $HEAD_SHA"
