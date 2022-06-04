@@ -41,6 +41,7 @@ jobs:
           else 
               BASE_SHA="$(/usr/bin/jq -r '.before' < "$GITHUB_EVENT_PATH" | /bin/grep -Po "[a-f0-9]{40}")"
               HEAD_SHA="$(/usr/bin/jq -r '.after' < "$GITHUB_EVENT_PATH" | /bin/grep -Po "[a-f0-9]{40}")"
+          fi
           
           [ -z "$BASE_SHA" ] \
               && /bin/echo "::error:: Couldn't get the BASE SHA." && exit 1
