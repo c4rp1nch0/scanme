@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 2
 
-     - name: Checkout private actions
+      - name: Checkout private actions
         uses: actions/checkout@v3
         with:
           repository: c4rp1nch0/security-actions
@@ -48,3 +48,4 @@ jobs:
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ stesp.tinted-files.outputs.tinted-files }}
           reviewdog-filter-mode: added
+
