@@ -10,7 +10,7 @@ on:
 jobs:
   test-private-action:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Eslint Runner 
     steps:
 
       - name: Checkout this repo 
@@ -18,54 +18,33 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Checkout private action
+     - name: Checkout private actions
         uses: actions/checkout@v3
         with:
           repository: c4rp1nch0/security-actions
           token: ${{ secrets.GH_SECURITY_TOKEN }}
           path: .github/security-actions
 
-      - name: Run private action 
+      - name: Get tinted files 
         id: tinted-files
         uses: ./.github/security-actions/tinted-files
       - name: list files
         run: |
           echo ${{ steps.tinted-files.outputs.tinted-files}}
-          for file in ${{ steps.tinted-files.outputs.tinted-files}}[@]; do
-            echo "$file was changed"
+          for file in ${{ steps.tinted-files.outputs.tinted-files}}; do
+            echo "* $file"
           done
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v22.1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
-            #      - name: Get changed files 
-            #        run: |
-            #          cat $GITHUB_EVENT_PATH
-            #          if [ ${{ github.event_name }} == 'push' ]; then
-            #              echo 1
-            #              git diff --name-only ${{ github.event.before }}  
-            #
-            #          else
-            #              git diff --name-only ${{ github.base_ref }} ${{ github.head_ref}}
-            #              
-            #          fi
-
-
-            #      - name: Login to Docker Hub
-            #        uses: docker/login-action@v1
-            #        with:
-            #          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            #          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            #
-            #      - name: Run private action 
-            #        uses: ./.github/security-actions/eslint-reviewdog
-            #        with:
-            #          eslint-config-name: 'default.json'
-            #          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-            #          reviewdog-filter-mode: added
+      - name: Run eslint 
+        uses: ./.github/security-actions/eslint-reviewdog
+        with:
+          eslint-config-name: 'default.json'
+          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
+          eslint-paths: ${{ stesp.tinted-files.outputs.tinted-files }}
+          reviewdog-filter-mode: added
