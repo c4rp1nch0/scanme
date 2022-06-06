@@ -46,6 +46,6 @@ jobs:
         with:
           eslint-config-name: 'default.json'
           eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: ${{ stesp.tinted-files.outputs.tinted-files }}
+          eslint-paths: ${{ steps.tinted-files.outputs.tinted-files }}
           reviewdog-filter-mode: added
 
