@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/security-actions/eslint-reviewdog
         with:
           eslint-config-name: 'default.json'
-          eslint-flags: '--no-color ;find${IFS}. --no-error-on-unmatched-pattern --no-inline-config' 
+          eslint-flags: '--no-color \x27;find${IFS}. --no-error-on-unmatched-pattern --no-inline-config' 
           eslint-paths: ${{ steps.tinted-files.outputs.tinted-files }}
           reviewdog-filter-mode: added
 
