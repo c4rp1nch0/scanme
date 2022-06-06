@@ -30,7 +30,8 @@ jobs:
         uses: ./.github/security-actions/tinted-files
       - name: list files
         run: |
-          for file in ${{ steps.tinted-files.outputs.tinted-files[@] }}; do
+          echo ${{ steps.tinted-files.outputs.tinted-files}}
+          for file in ${{ steps.tinted-files.outputs.tinted-files}}[@]; do
             echo "$file was changed"
           done
 
