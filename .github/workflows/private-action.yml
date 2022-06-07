@@ -28,12 +28,6 @@ jobs:
       - name: Get tinted files 
         id: tinted-files
         uses: ./.github/security-actions/tinted-files
-      - name: list files
-        run: |
-          echo ${{ steps.tinted-files.outputs.tinted-files}}
-          for file in ${{ steps.tinted-files.outputs.tinted-files}}; do
-            echo "* $file"
-          done
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
