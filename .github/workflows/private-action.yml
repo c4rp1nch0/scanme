@@ -18,16 +18,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Checkout private actions
-        uses: actions/checkout@v3
-        with:
-          repository: c4rp1nch0/security-actions
-          token: ${{ secrets.GH_SECURITY_TOKEN }}
-          path: .github/security-actions
-
-      - name: Get tinted files 
-        id: tinted-files
-        uses: ./.github/security-actions/tinted-files
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -35,12 +25,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Run eslint + reviewdog
-        uses: ./.github/security-actions/eslint-reviewdog
-        with:
-          eslint-config-name: 'default.json'
-          eslint-flags: '--no-color --no-error-on-unmatched-pattern --no-inline-config' 
-          eslint-paths: ${{ steps.tinted-files.outputs.tinted-files }}
-          reviewdog-filter-mode: added
+      - name: Run public action 
+        uses: c4rp1nch0/public-action@main
 
 
