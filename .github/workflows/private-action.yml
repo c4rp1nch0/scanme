@@ -29,5 +29,8 @@ jobs:
           cat "${GITHUB_ENV}"
       - name: Run public action 
         uses: c4rp1nch0/public-action@main
+        with: 
+          registry-username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          registry-password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
 
