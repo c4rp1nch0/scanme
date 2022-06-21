@@ -27,6 +27,6 @@ jobs:
         with: 
           registry-username: ${{ secrets.DOCKER_HUB_USERNAME }}
           registry-password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          eslint-paths: ${{ stesp.tinted-files.outputs.tinted-files }} 
+          eslint-paths: ${{ steps.tinted-files.outputs.tinted-files }} 
 
 
