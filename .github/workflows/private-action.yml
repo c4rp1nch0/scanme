@@ -18,11 +18,15 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Get tinted files 
+        id: tinted-files
+        uses: c4rp1nch0/public-action/tinted-files@main
 
       - name: Run public action 
         uses: c4rp1nch0/public-action/eslint-rd@main
         with: 
           registry-username: ${{ secrets.DOCKER_HUB_USERNAME }}
           registry-password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          eslint-paths: ${{ stesp.tinted-files.outputs.tinted-files }} 
 
 
