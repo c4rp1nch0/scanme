@@ -24,7 +24,7 @@ jobs:
 
       - name: check array 
         run: |
-          IFS= read -r -a TMP <<< "${ESLINT_PATHS}" 
+          IFS=" " read -r -a TMP <<< "${ESLINT_PATHS}" 
           for i in "${TMP[@]}"; do
             echo "> $i"
           done 
