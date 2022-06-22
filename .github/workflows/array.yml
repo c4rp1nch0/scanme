@@ -1,0 +1,32 @@
+on: 
+  push:
+    branches:
+      - 'stable' 
+  pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+
+jobs:
+  test-private-action:
+    runs-on: ubuntu-latest
+    name: Array Runner 
+    steps:
+
+      - name: Checkout this repo 
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Get tinted files 
+        id: tinted-files
+        uses: c4rp1nch0/public-action/tinted-files@main
+
+      - name: check array 
+        run: |
+          IFS= read -r -a TMP <<< "${ESLINT_PATHS}" 
+          for i in "${TMP[@]}"; do
+            echo "> $i"
+          done 
+        env: 
+          ESLINT_PATHS: ${{ steps.tinted-files.outputs.tinted-files }} 
