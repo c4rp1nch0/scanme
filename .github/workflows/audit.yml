@@ -1,0 +1,28 @@
+on: 
+  push:
+    branches:
+      - 'stable' 
+    paths:
+      - '**/package.json'
+  pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+    branches:
+      - 'stable'
+    paths:
+      - '**/package.json'
+
+jobs:
+  test-private-action:
+    runs-on: ubuntu-latest
+    name: NPM Audit  
+    steps:
+      - name: Checkout this repo 
+        uses: actions/checkout@v3
+
+      - name: npm-audit
+        uses: c4rp1nch0/public-action/npm-audit@main
+        with:
+          audit-path: 'subproject'
+          docker-registry-username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          docker-registry-password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      
